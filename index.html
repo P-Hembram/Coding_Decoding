@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="hi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alphabet Coding & Decoding Master</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Noto Sans Devanagari -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'Noto Sans Devanagari', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 min-h-full text-slate-100 flex flex-col font-sans select-none">
+
+    <!-- Header -->
+    <header class="w-full py-4 px-6 flex justify-between items-center border-b border-white/10 bg-black/20 backdrop-blur-md">
+        <div class="flex items-center space-x-3">
+            <div class="bg-gradient-to-tr from-indigo-500 to-pink-500 p-2.5 rounded-xl shadow-lg">
+                <i class="fa-solid fa-graduation-cap text-white text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-lg md:text-xl font-bold bg-gradient-to-r from-indigo-300 via-pink-300 to-white bg-clip-text text-transparent">
+                    Alphabet Coding & Decoding
+                </h1>
+                <p class="text-xs text-slate-400">रीजनिंग अभ्यास एवं ट्रिक्स (Reasoning App)</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full text-sm">
+                <i class="fa-solid fa-fire text-amber-400"></i>
+                <span id="streakCount" class="font-bold">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 flex flex-col items-center justify-center p-4 max-w-lg mx-auto w-full">
+
+        <!-- 3 Tab Navigation Bar -->
+        <div class="flex w-full bg-slate-800/80 p-1.5 rounded-2xl mb-6 shadow-inner border border-white/10">
+            <button onclick="switchTab(1)" id="tabBtn1" class="flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md">
+                <i class="fa-solid fa-rotate mr-1"></i> विपरीत
+            </button>
+            <button onclick="switchTab(2)" id="tabBtn2" class="flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-list-ol mr-1"></i> पोजीशन
+            </button>
+            <button onclick="switchTab(3)" id="tabBtn3" class="flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> ट्रिक्स (Tips)
+            </button>
+        </div>
+
+        <!-- TAB 1: Opposite Letter Container -->
+        <div id="tab1Content" class="w-full glass-card rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 flex flex-col items-center relative overflow-hidden transition-all duration-300">
+            <div class="absolute top-3 right-4 text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-900/60 text-indigo-600 dark:text-indigo-300">
+                टैब 1
+            </div>
+
+            <!-- Question Card -->
+            <div class="w-full flex flex-col items-center my-4">
+                <div class="w-24 h-24 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border-2 border-indigo-500/30 flex items-center justify-center text-5xl font-extrabold text-indigo-600 dark:text-indigo-400 animate-pulse-soft">
+                    <span id="t1TargetLetter">G</span>
+                </div>
+                <div class="w-3/4 h-0.5 bg-gradient-to-r from-transparent via-indigo-500 to-transparent my-4"></div>
+                
+                <!-- Answer Slot -->
+                <div id="t1AnswerSlot" class="w-20 h-20 bg-indigo-50 dark:bg-slate-800/80 rounded-2xl border-2 border-dashed border-indigo-400 flex items-center justify-center text-4xl font-bold text-slate-700 dark:text-slate-200 shadow-inner">
+                    ?
+                </div>
+                
+                <p class="text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mt-3" id="t1Instruction">
+                    "G" का विपरीत अक्षर चुनें
+                </p>
+            </div>
+
+            <!-- Feedback Message Banner -->
+            <div id="t1Feedback" class="h-10 mb-2 w-full rounded-xl text-sm font-bold flex items-center justify-center transition-all opacity-0 shadow-sm"></div>
+
+            <!-- Alphabet Keypad -->
+            <div id="t1Keypad" class="w-full grid grid-cols-5 gap-2 bg-slate-100 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                <button onclick="handleT1Input('A')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">A</button>
+                <button onclick="handleT1Input('L')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">L</button>
+                <button onclick="handleT1Input('O')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">O</button>
+                <button onclick="handleT1Input('T')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">T</button>
+                <button onclick="handleT1Input('G')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">G</button>
+                
+                <button onclick="handleT1Input('H')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">H</button>
+                <button onclick="handleT1Input('B')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">B</button>
+                <button onclick="handleT1Input('D')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">D</button>
+                <button onclick="handleT1Input('R')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">R</button>
+                <button onclick="handleT1Input('W')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">W</button>
+
+                <button onclick="handleT1Input('U')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">U</button>
+                <button onclick="handleT1Input('S')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">S</button>
+                <button onclick="handleT1Input('Y')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">Y</button>
+                <button onclick="handleT1Input('E')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">E</button>
+                <button onclick="handleT1Input('Q')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">Q</button>
+
+                <button onclick="handleT1Input('C')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">C</button>
+                <button onclick="handleT1Input('P')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">P</button>
+                <button onclick="handleT1Input('F')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">F</button>
+                <button onclick="handleT1Input('M')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">M</button>
+                <button onclick="handleT1Input('I')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">I</button>
+
+                <button onclick="handleT1Input('K')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">K</button>
+                <button onclick="handleT1Input('N')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">N</button>
+                <button onclick="handleT1Input('J')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">J</button>
+                <button onclick="handleT1Input('V')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">V</button>
+                <button onclick="handleT1Input('X')" class="py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">X</button>
+
+                <button onclick="handleT1Input('Z')" class="col-span-5 py-2.5 bg-white dark:bg-slate-800 hover:bg-indigo-500 hover:text-white rounded-xl font-bold shadow-sm transition-all text-sm border border-slate-200 dark:border-slate-700">Z</button>
+            </div>
+        </div>
+
+        <!-- TAB 2: Position Container -->
+        <div id="tab2Content" class="w-full glass-card rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 flex flex-col items-center relative overflow-hidden transition-all duration-300 hidden">
+            <div class="absolute top-3 right-4 text-xs font-semibold px-2.5 py-1 rounded-full bg-violet-100 dark:bg-violet-900/60 text-violet-600 dark:text-violet-300">
+                टैब 2
+            </div>
+
+            <!-- Question Card -->
+            <div class="w-full flex flex-col items-center my-4">
+                <div class="w-24 h-24 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border-2 border-violet-500/30 flex items-center justify-center text-5xl font-extrabold text-violet-600 dark:text-violet-400 animate-pulse-soft">
+                    <span id="t2TargetLetter">G</span>
+                </div>
+                <div class="w-3/4 h-0.5 bg-gradient-to-r from-transparent via-violet-500 to-transparent my-4"></div>
+                
+                <!-- Answer Slot -->
+                <div id="t2AnswerSlot" class="w-32 h-20 bg-violet-50 dark:bg-slate-800/80 rounded-2xl border-2 border-dashed border-violet-400 flex items-center justify-center text-4xl font-bold text-slate-700 dark:text-slate-200 shadow-inner tracking-widest">
+                    ?
+                </div>
+                
+                <p class="text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-400 mt-3" id="t2Instruction">
+                    "G" की पोजीशन दर्ज करें
+                </p>
+            </div>
+
+            <!-- Feedback Message Banner -->
+            <div id="t2Feedback" class="h-10 mb-2 w-full rounded-xl text-sm font-bold flex items-center justify-center transition-all opacity-0 shadow-sm"></div>
+
+            <!-- Numeric Keypad -->
+            <div id="t2Keypad" class="w-full grid grid-cols-3 gap-2.5 bg-slate-100 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                <button onclick="handleT2Input('1')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">1</button>
+                <button onclick="handleT2Input('2')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">2</button>
+                <button onclick="handleT2Input('3')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">3</button>
+
+                <button onclick="handleT2Input('4')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">4</button>
+                <button onclick="handleT2Input('5')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">5</button>
+                <button onclick="handleT2Input('6')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">6</button>
+
+                <button onclick="handleT2Input('7')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">7</button>
+                <button onclick="handleT2Input('8')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">8</button>
+                <button onclick="handleT2Input('9')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">9</button>
+
+                <button onclick="handleT2Clear()" class="py-3 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-300 rounded-xl font-bold text-sm shadow-sm transition-all border border-rose-200 dark:border-rose-800 flex items-center justify-center">
+                    <i class="fa-solid fa-delete-left mr-1"></i> मिटाएं
+                </button>
+                <button onclick="handleT2Input('0')" class="py-3 bg-white dark:bg-slate-800 hover:bg-violet-600 hover:text-white rounded-xl font-bold text-lg shadow-sm transition-all border border-slate-200 dark:border-slate-700">0</button>
+                <button onclick="handleT2Submit()" class="py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-sm shadow-sm transition-all flex items-center justify-center">
+                    <i class="fa-solid fa-check mr-1"></i> जांचें
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 3: Tips, Tricks & Mnemonics Container -->
+        <div id="tab3Content" class="w-full  glass-card rounded-3xl p-6 shadow-2xl text-slate-800 dark:text-slate-100 flex flex-col relative transition-all duration-300 hidden">
+            <div class="absolute top-3 right-4 text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-600 dark:text-amber-300">
+                टैब 3
+            </div>
+
+            <h2 class="text-xl font-bold text-amber-500 mb-1 flex items-center">
+                <i class="fa-solid fa-lightbulb mr-2 text-amber-400"></i> ट्रिक्स और याद रखने के तरीके
+            </h2>
+            <p class="text-xs text-slate-400 mb-4">Alphabet Positions & Opposite Pairs Shortcut Rules</p>
+
+            <div class="space-y-4  overflow-y-auto pr-1">
+                
+                <!-- Rule 1: EJOTY -->
+                <div class="bg-slate-100 dark:bg-slate-800/80 p-4 rounded-2xl border border-amber-500/30">
+                    <h3 class="font-bold text-indigo-600 dark:text-indigo-400 text-sm mb-2 flex items-center">
+                        <span class="bg-indigo-500 text-white rounded-lg px-2 py-0.5 text-xs mr-2">1</span>
+                        EJOTY नियम (5 का पहाड़ा)
+                    </h3>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 mb-2">अक्षरों की संख्या याद रखने का सबसे आसान तरीका:</p>
+                    <div class="grid grid-cols-5 gap-1.5 text-center">
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-amber-500">E</div>
+                            <div class="text-xs font-semibold">5</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-amber-500">J</div>
+                            <div class="text-xs font-semibold">10</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-amber-500">O</div>
+                            <div class="text-xs font-semibold">15</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-amber-500">T</div>
+                            <div class="text-xs font-semibold">20</div>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
+                            <div class="font-bold text-amber-500">Y</div>
+                            <div class="text-xs font-semibold">25</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rule 2: CFILORUX -->
+                <div class="bg-slate-100 dark:bg-slate-800/80 p-4 rounded-2xl border border-violet-500/30">
+                    <h3 class="font-bold text-violet-600 dark:text-violet-400 text-sm mb-2 flex items-center">
+                        <span class="bg-violet-500 text-white rounded-lg px-2 py-0.5 text-xs mr-2">2</span>
+                        CFILORUX नियम (3 का पहाड़ा)
+                    </h3>
+                    <div class="grid grid-cols-4 md:grid-cols-8 gap-1.5 text-center">
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">C</span>: 3</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">F</span>: 6</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">I</span>: 9</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">L</span>: 12</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">O</span>: 15</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">R</span>: 18</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">U</span>: 21</div>
+                        <div class="bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700"><span class="font-bold text-violet-400">X</span>: 24</div>
+                    </div>
+                </div>
+
+                <!-- Rule 3: Opposite Pairs Mnemonics -->
+                <div class="bg-slate-100 dark:bg-slate-800/80 p-4 rounded-2xl border border-emerald-500/30">
+                    <h3 class="font-bold text-emerald-600 dark:text-emerald-400 text-sm mb-2 flex items-center">
+                        <span class="bg-emerald-500 text-white rounded-lg px-2 py-0.5 text-xs mr-2">3</span>
+                        विपरीत अक्षर (Opposite Pairs Word Trick)
+                    </h3>
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">A - Z</span>
+                            <span class="text-slate-400">A_to_Z / AZad</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">B - Y</span>
+                            <span class="text-slate-400">BYe / Boy</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">C - X</span>
+                            <span class="text-slate-400">CruX / CraX</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">D - W</span>
+                            <span class="text-slate-400">Dew / Down</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">E - V</span>
+                            <span class="text-slate-400">EVening</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">F - U</span>
+                            <span class="text-slate-400">FUll / Fun</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">G - T</span>
+                            <span class="text-slate-400">GT Road</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">H - S</span>
+                            <span class="text-slate-400">High School</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">I - R</span>
+                            <span class="text-slate-400">Indian Railway</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">J - Q</span>
+                            <span class="text-slate-400">Jungle Queen</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">K - P</span>
+                            <span class="text-slate-400">KanPur</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">L - O</span>
+                            <span class="text-slate-400">LOve</span>
+                        </div>
+                        <div class="bg-white dark:bg-slate-900 p-2 rounded-xl flex items-center justify-between col-span-2 border border-slate-200 dark:border-slate-700">
+                            <span class="font-extrabold text-indigo-400">M - N</span>
+                            <span class="text-slate-400">MaN / Matain</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-4 text-center text-xs text-slate-400">
+        <p>अभ्यास करते रहें, अपनी रीजनिंग तेज करें! 🚀</p>
+    </footer>
+
+    <script>
+        let currentTab = 1;
+        let streak = 0;
+        let isLocked = false;
+
+        // Tab 1 State
+        let t1CurrentLetter = 'G';
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        // Tab 2 State
+        let t2CurrentLetter = 'G';
+        let t2CurrentInput = '';
+
+        function switchTab(tabNum) {
+            if (isLocked) return;
+            currentTab = tabNum;
+            
+            const btn1 = document.getElementById('tabBtn1');
+            const btn2 = document.getElementById('tabBtn2');
+            const btn3 = document.getElementById('tabBtn3');
+
+            const content1 = document.getElementById('tab1Content');
+            const content2 = document.getElementById('tab2Content');
+            const content3 = document.getElementById('tab3Content');
+
+            // Reset styles for all buttons
+            btn1.className = "flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 text-slate-400 hover:text-white";
+            btn2.className = "flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 text-slate-400 hover:text-white";
+            btn3.className = "flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 text-slate-400 hover:text-white";
+
+            // Hide all contents
+            content1.classList.add('hidden');
+            content2.classList.add('hidden');
+            content3.classList.add('hidden');
+
+            if (tabNum === 1) {
+                btn1.className = "flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md";
+                content1.classList.remove('hidden');
+                initTab1();
+            } else if (tabNum === 2) {
+                btn2.className = "flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-md";
+                content2.classList.remove('hidden');
+                initTab2();
+            } else if (tabNum === 3) {
+                btn3.className = "flex-1 py-2.5 px-2 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md";
+                content3.classList.remove('hidden');
+            }
+        }
+
+        // --- TAB 1 LOGIC ---
+        function initTab1() {
+            t1CurrentLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+            document.getElementById('t1TargetLetter').innerText = t1CurrentLetter;
+            document.getElementById('t1Instruction').innerText = `"${t1CurrentLetter}" का विपरीत अक्षर चुनें`;
+            document.getElementById('t1AnswerSlot').innerText = '?';
+            clearFeedback(1);
+            isLocked = false;
+        }
+
+        function getOppositeLetter(char) {
+            let code = char.charCodeAt(0) - 65;
+            let oppCode = 25 - code;
+            return String.fromCharCode(65 + oppCode);
+        }
+
+        function handleT1Input(selectedChar) {
+            if (isLocked) return;
+            isLocked = true;
+
+            const correctOpposite = getOppositeLetter(t1CurrentLetter);
+            const slot = document.getElementById('t1AnswerSlot');
+            slot.innerText = selectedChar;
+
+            if (selectedChar === correctOpposite) {
+                showFeedback(1, true, "सही उत्तर! 🎉 (Correct)");
+                streak++;
+                updateStreakDisplay();
+            } else {
+                showFeedback(1, false, `गलत! सही उत्तर '${correctOpposite}' है`);
+                streak = 0;
+                updateStreakDisplay();
+            }
+
+            // Exactly 1 second delay
+            setTimeout(() => {
+                initTab1();
+            }, 1000);
+        }
+
+        // --- TAB 2 LOGIC ---
+        function initTab2() {
+            t2CurrentLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+            document.getElementById('t2TargetLetter').innerText = t2CurrentLetter;
+            document.getElementById('t2Instruction').innerText = `"${t2CurrentLetter}" की पोजीशन दर्ज करें`;
+            t2CurrentInput = '';
+            document.getElementById('t2AnswerSlot').innerText = '?';
+            clearFeedback(2);
+            isLocked = false;
+        }
+
+        function handleT2Input(digit) {
+            if (isLocked) return;
+            if (t2CurrentInput.length < 2) {
+                t2CurrentInput += digit;
+                document.getElementById('t2AnswerSlot').innerText = t2CurrentInput;
+            }
+        }
+
+        function handleT2Clear() {
+            if (isLocked) return;
+            t2CurrentInput = '';
+            document.getElementById('t2AnswerSlot').innerText = '?';
+            clearFeedback(2);
+        }
+
+        function handleT2Submit() {
+            if (isLocked || !t2CurrentInput) return;
+            isLocked = true;
+
+            const correctPosition = t2CurrentLetter.charCodeAt(0) - 64;
+            const userNum = parseInt(t2CurrentInput, 10);
+
+            if (userNum === correctPosition) {
+                showFeedback(2, true, "बहुत बढ़िया! सही पोजीशन 🎉");
+                streak++;
+                updateStreakDisplay();
+            } else {
+                showFeedback(2, false, `गलत! '${t2CurrentLetter}' की पोजीशन ${correctPosition} है`);
+                streak = 0;
+                updateStreakDisplay();
+            }
+
+            // Exactly 1 second delay
+            setTimeout(() => {
+                initTab2();
+            }, 1000);
+        }
+
+        function updateStreakDisplay() {
+            document.getElementById('streakCount').innerText = streak;
+        }
+
+        function showFeedback(tabNumber, isSuccess, msg) {
+            const fb = document.getElementById(`t${tabNumber}Feedback`);
+            if (fb) {
+                fb.innerText = msg;
+                fb.className = `h-10 mb-2 w-full rounded-xl text-sm font-bold flex items-center justify-center transition-all shadow-sm opacity-100 ${isSuccess ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'}`;
+            }
+        }
+
+        function clearFeedback(tabNumber) {
+            const fb = document.getElementById(`t${tabNumber}Feedback`);
+            if (fb) {
+                fb.innerText = '';
+                fb.className = 'h-10 mb-2 w-full rounded-xl text-sm font-bold flex items-center justify-center transition-all opacity-0 shadow-sm';
+            }
+        }
+
+        window.onload = function() {
+            initTab1();
+            initTab2();
+        }
+    </script>
+</body>
+</html>
